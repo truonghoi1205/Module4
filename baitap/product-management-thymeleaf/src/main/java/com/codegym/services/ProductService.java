@@ -25,22 +25,18 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product findById(int id) {
+    public Product findById(Long id) {
         return productRepo.findById(id);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         productRepo.delete(id);
-    }
-
-    @Override
-    public void update( Product product) {
-        productRepo.update(product);
     }
 
     @Override
     public List<Product> searchProductByName(String keyword) {
         return productRepo.searchProductByName(keyword);
     }
+
 }

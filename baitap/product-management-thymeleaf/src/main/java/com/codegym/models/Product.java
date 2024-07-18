@@ -1,29 +1,34 @@
 package com.codegym.models;
 
+import javax.persistence.*;
+
+
+@Entity
 public class Product {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private double price;
     private String description;
     private String producer;
-    private static int lastedId = 0;
 
     public Product() {
     }
 
-    public Product(String name, double price, String description, String producer) {
+    public Product(Long id, String name, double price, String description, String producer) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.producer = producer;
-        this.id = ++ lastedId;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -46,7 +46,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/delete")
-    public String showFormDelete(@PathVariable int id,
+    public String showFormDelete(@PathVariable Long id,
                          Model model) {
         model.addAttribute("product", productService.findById(id));
         return "/delete";
@@ -61,7 +61,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/update")
-    public String showFormUpdate(@PathVariable int id,
+    public String showFormUpdate(@PathVariable Long id,
                          Model model) {
         model.addAttribute("product", productService.findById(id));
         return "/update";
@@ -70,17 +70,11 @@ public class ProductController {
     @PostMapping("/update")
     public String update(@ModelAttribute Product product,
                          RedirectAttributes redirect) {
-        productService.update(product);
+        productService.save(product);
         redirect.addFlashAttribute("noti", "Sửa thành công!");
         return "redirect:/products";
     }
 
-    @GetMapping("/{id}/view")
-    public String showProduct(@PathVariable int id,
-                                 Model model) {
-        model.addAttribute("product", productService.findById(id));
-        return "/view";
-    }
 
     @GetMapping("/search")
     public String searchProductByName(@RequestParam String keyword,

@@ -3,61 +3,57 @@ package com.codegym.repositories;
 import com.codegym.models.Product;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Transactional
 @Repository
 public class ProductRepo implements IProductRepo {
     private static final List<Product> products = new ArrayList<>();
 
-    static {
-        products.add(new Product("Giấy", 3000, "Đây là giấy", "Việt Nam"));
-        products.add(new Product("Bánh", 5000, "Đây là bánh", "Trung Quốc"));
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public List<Product> showAll() {
+        List<Product> products = entityManager.createQuery("select p from Product p", Product.class).getResultList();
         return products;
     }
 
     @Override
     public void save(Product product) {
-        products.add(product);
+        entityManager.merge(product);
     }
 
     @Override
-    public Product findById(int id) {
-        for (Product product : products) {
-            if (product.getId() == id) {
-                return product;
-            }
+    public Product findById(Long id) {
+        TypedQuery<Product> query = entityManager.createQuery("select p from Product p where  p.id=:id", Product.class);
+        query.setParameter("id", id);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
-        return null;
     }
 
     @Override
-    public void delete(int id) {
-        products.remove(findById(id));
-    }
-
-    @Override
-    public void update( Product product) {
-        Product p = findById(product.getId());
-        p.setName(product.getName());
-        p.setPrice(product.getPrice());
-        p.setDescription(product.getDescription());
-        p.setProducer(product.getProducer());
+    public void delete(Long id) {
+        Product product = findById(id);
+        if (product != null) {
+            entityManager.remove(product);
+        }
     }
 
     @Override
     public List<Product> searchProductByName(String keyword) {
-        List<Product> productsNew = new ArrayList<>();
-        for (Product product : products) {
-            if (product.getName().contains(keyword)) {
-                productsNew.add(product);
-            }
-        }
-        return productsNew;
+        List<Product> products = entityManager.createQuery("select p from Product p where name like :name", Product.class).setParameter("name","%" + keyword + "%").getResultList();
+        return products;
     }
+
 }

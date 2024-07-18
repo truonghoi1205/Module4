@@ -7,7 +7,7 @@
 <body class="bg-body-tertiary">
 <div class="container">
     <div class="mt-5 rounded shadow-sm bg-white">
-        <div class=" px-3 py-2 d-flex justify-content-between align-items-center">
+        <div class=" px-3 py-2 d-flex  justify-content-between align-items-center">
             <h2 class="mb-0">Danh sách sản phẩm</h2>
             <div>
                 <a class="btn btn-sm btn-primary" th:href="@{/products/create}">Thêm mới</a>
@@ -36,7 +36,7 @@
 
                 <td class="text-center" th:text="${status.count}"></td>
                 <td th:text="${product.getName()}"></td>
-                <td th:text="${product.getPrice()}"></td>
+                <td><span th:text="${#numbers.formatDecimal(product.getPrice(), 0, 'COMMA', 0, 'POINT')}"></span> VNĐ</td>
                 <td th:text="${product.getDescription()}"></td>
                 <td th:text="${product.getProducer()}"></td>
                 <td class="text-end">

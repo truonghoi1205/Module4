@@ -9,11 +9,10 @@ public interface IProductRepo {
 
     void save(Product product);
 
-    Product findById(int id);
+    Product findById(Long id);
 
-    void delete(int id);
-
-    void update( Product product);
+    void delete(Long id);
 
     List<Product> searchProductByName(String keyword);
+
 }
