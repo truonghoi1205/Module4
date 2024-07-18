@@ -4,6 +4,7 @@ import com.codegym.models.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -47,5 +48,16 @@ public class ProductRepo implements IProductRepo {
         p.setPrice(product.getPrice());
         p.setDescription(product.getDescription());
         p.setProducer(product.getProducer());
+    }
+
+    @Override
+    public List<Product> searchProductByName(String keyword) {
+        List<Product> productsNew = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getName().contains(keyword)) {
+                productsNew.add(product);
+            }
+        }
+        return productsNew;
     }
 }
