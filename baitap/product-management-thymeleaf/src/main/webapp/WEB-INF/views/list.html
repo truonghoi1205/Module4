@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{/layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="bg-body-tertiary">
+<div class="container mt-5 p-3 rounded shadow-sm bg-white">
+    <div class="mb-2 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Danh sách sản phẩm</h2>
+        <div>
+            <a class="btn btn-sm btn-primary" th:href="@{/products/create}">Thêm mới</a>
+        </div>
+    </div>
+    <div>
+
+        <p th:if="${noti}" class="alert alert-success" th:text="${noti}"></p>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th style="width: 10px" class="text-center">#</th>
+
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Mô tả</th>
+            <th>Nhà sản xuất</th>
+            <th style="width: 105px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product,status : ${products}">
+
+            <td class="text-center" th:text="${status.count}"></td>
+            <td th:text="${product.getName()}"></td>
+            <td th:text="${product.getPrice()}"></td>
+            <td th:text="${product.getDescription()}"></td>
+            <td th:text="${product.getProducer()}"></td>
+            <td class="text-end">
+
+                <a class="btn btn-sm btn-outline-secondary"
+                   th:href="@{/products/__${product.getId()}__/update}">Sửa</a>
+                <a class="btn btn-sm btn-outline-danger"
+                   th:href="@{/products/__${product.getId()}__/delete}">Xóa</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
