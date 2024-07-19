@@ -13,5 +13,4 @@ public interface ICustomerService {
 
     Customer findById(int id);
 
-    void update(int id, Customer customer);
 }

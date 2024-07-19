@@ -32,8 +32,4 @@ public class CustomerService implements ICustomerService{
         return customerRepo.findById(id);
     }
 
-    @Override
-    public void update(int id, Customer customer) {
-        customerRepo.update(id,customer);
-    }
 }

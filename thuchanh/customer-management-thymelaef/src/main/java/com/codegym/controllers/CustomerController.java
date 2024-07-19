@@ -31,7 +31,6 @@ public class CustomerController {
 
     @PostMapping("/create")
     public String save(@ModelAttribute Customer customer) {
-        customer.setId((int) (Math.random() * 10000));
         customerService.save(customer);
         return "redirect:/customers";
     }
@@ -61,7 +60,7 @@ public class CustomerController {
     @PostMapping("/update")
     public String update(@ModelAttribute Customer customer,
                          RedirectAttributes redirect) {
-        customerService.update(customer.getId(), customer);
+        customerService.save(customer);
         redirect.addFlashAttribute("success", "Cập nhật thành công!");
         return "redirect:/customers";
     }
