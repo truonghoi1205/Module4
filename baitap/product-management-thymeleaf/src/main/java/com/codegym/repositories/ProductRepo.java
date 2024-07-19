@@ -8,14 +8,11 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Transactional
 @Repository
 public class ProductRepo implements IProductRepo {
-    private static final List<Product> products = new ArrayList<>();
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -28,7 +25,11 @@ public class ProductRepo implements IProductRepo {
 
     @Override
     public void save(Product product) {
-        entityManager.merge(product);
+        if (product.getId() != null) {
+            entityManager.merge(product);
+        } else {
+            entityManager.persist(product);
+        }
     }
 
     @Override
@@ -52,7 +53,8 @@ public class ProductRepo implements IProductRepo {
 
     @Override
     public List<Product> searchProductByName(String keyword) {
-        List<Product> products = entityManager.createQuery("select p from Product p where name like :name", Product.class).setParameter("name","%" + keyword + "%").getResultList();
+        List<Product> products = entityManager.createQuery("select p from Product p where name like :name"
+                , Product.class).setParameter("name","%" + keyword + "%").getResultList();
         return products;
     }
 
