@@ -1,9 +1,11 @@
 package com.codegym.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
+
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +14,7 @@ public class Product {
     private double price;
     private String description;
     private String producer;
+
 
     public Product() {
     }
