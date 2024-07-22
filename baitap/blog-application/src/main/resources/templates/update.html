@@ -8,7 +8,7 @@
 <div th:replace="~{layout :: nav}"></div>
 <div class="container">
     <div class="shadow-sm mt-5 p-4">
-        <h2>Xóa BLOG</h2>
+        <h2>Sửa BLOG</h2>
         <form action="/blog/update" method="post" th:object="${blog}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}"/>
             <div>
@@ -20,10 +20,10 @@
                     <label for="author" class="form-label">Tên tác giả</label>
                     <input type="text" class="form-control" id="author" name="author" th:field="*{author}">
                 </div>
-                <div class="col-6">
+                <div class="col-6 ">
                     <label for="avatar" class="form-label">Avatar</label>
-                    <img th:src="${blog.avatar}" class="img-fluid">
                     <input type="file" class="form-control" id="avatar" name="avatar" th:field="*{avatar}">
+                    <img th:src=" '/'+ ${blog.avatar}" class="img-fluid">
                 </div>
             </div>
             <div>

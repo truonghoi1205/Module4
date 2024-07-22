@@ -29,7 +29,7 @@
             <td class="text-center" th:text="${status.count}"></td>
             <td><span th:text="${#strings.substring(blog.content, 0, 126)}"></span> ...</td>
             <td><img class="img-fluid overflow-hidden object-fit-cover"
-                      th:src="${blog.avatar}"
+                      th:src=" '/' + ${blog.avatar}"
                       style="width: 25px; height: 25px;"></td>
             <td th:text="${blog.author}"></td>
             <td>
