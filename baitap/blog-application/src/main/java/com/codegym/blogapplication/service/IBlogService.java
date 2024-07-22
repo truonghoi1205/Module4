@@ -1,9 +1,11 @@
 package com.codegym.blogapplication.service;
 
 import com.codegym.blogapplication.model.Blog;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IBlogService {
-    Iterable<Blog> findAll();
+    Page<Blog> findAll(Pageable pageable);
 
     void save(Blog blog);
 

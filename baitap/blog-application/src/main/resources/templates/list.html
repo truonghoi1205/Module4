@@ -38,7 +38,22 @@
             </td>
         </tr>
     </table>
-
+    <div class="mt-3 d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:if="${blogList.hasPrevious()}">
+                    <a class="page-link" th:href="@{/blog/list(page=${blogList.number - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${blogList.hasNext()}">
+                    <a class="page-link" th:href="@{/blog/list(page=${blogList.number + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 </body>
 </html>

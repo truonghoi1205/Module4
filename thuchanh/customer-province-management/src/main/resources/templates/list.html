@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
-<head th:replace="/layout :: head">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{/layout :: head}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="bg-body-tertiary">
+<div class="container mt-5 ">
+    <div class="mt-3 d-flex justify-content-between shadow-sm p-3 rounded">
+        <h3 class="m-0">Danh sách khách hàng</h3>
+        <form action="" class="d-flex">
+            <div class="input-group">
+                <span class="input-group-text ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="DocSearch-Search-Icon"
+                     viewBox="0 0 16 16" aria-hidden="true">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+                </span>
+                <input type="text" placeholder="Nhập tên khách hàng" class="form-control form-control-sm me-2">
+            </div>
+            <button class="btn btn-sm btn-secondary">Tìm</button>
+        </form>
+        <a href="/customers/create" class="btn btn-sm btn-primary d-inline-flex text-nowrap align-items-center">Thêm
+            mới</a>
+    </div>
+    <div class="shadow-sm p-3 mt-4 rounded">
+        <p th:text="${noti}"></p>
+        <table class=" table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th style="width: 20px">STT</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Province</th>
+                <th style="width: 105px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c,cStatus : ${customers}">
+                <td th:text="${cStatus.count}"></td>
+                <td th:text="${c.getFirstName()}"></td>
+                <td th:text="${c.getLastName()}"></td>
+                <td th:text="${c.getProvince().getName()}"></td>
+                <td>
+                    <div class="d-flex">
+                        <a th:href="@{/customers/__${c.getId()}__/update}" class="btn btn-sm btn-success me-2">Sửa</a>
+                        <button th:attr="data-el_id=${c.getId()}, data-el_name=${c.getLastName()}" type="button"
+                                class="btn btn-sm btn-danger delete" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Xóa
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-3 d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:if="${customers.hasPrevious()}">
+                    <a class="page-link" th:href="@{/customers(page=${customers.number - 1})}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${customers.hasNext()}">
+                    <a class="page-link" th:href="@{/customers(page=${customers.number + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="id_customer" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span class="mb-3 text-center">Bạn có muốn xóa khách hàng </span><span id="name_customer"
+                                                                                           class="fw-bold"></span><span> không?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Xóa</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function infoDelete(id, name) {
+        document.getElementById("id_customer").setAttribute("action", `/customers/${id}/delete`)
+        document.getElementById("name_customer").innerHTML = name;
+    }
+
+    document.querySelectorAll('.delete').forEach(el => {
+        el.addEventListener('click', function () {
+            let id = el.dataset.el_id;
+            name = el.dataset.el_name;
+            infoDelete(id, name);
+        })
+    })
+</script>
 </body>
 </html>

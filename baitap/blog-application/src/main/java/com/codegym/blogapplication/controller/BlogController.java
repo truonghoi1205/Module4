@@ -6,6 +6,8 @@ import com.codegym.blogapplication.model.DTO.BlogFormUpdateDto;
 import com.codegym.blogapplication.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -25,15 +27,17 @@ public class BlogController {
     private IBlogService blogService;
 
     @GetMapping("")
-    public String home(Model model) {
-        Iterable<Blog> blogList = blogService.findAll();
+    public String home(Model model,
+                       @RequestParam(defaultValue = "0") int page) {
+        Page<Blog> blogList = blogService.findAll(PageRequest.of(page,5));
         model.addAttribute("blogList", blogList);
         return "home";
     }
 
     @GetMapping("/list")
-    public String showList(Model model) {
-        Iterable<Blog> blogList = blogService.findAll();
+    public String showList(Model model,
+                           @RequestParam(defaultValue = "0") int page) {
+        Page<Blog> blogList = blogService.findAll(PageRequest.of(page,5));
         model.addAttribute("blogList", blogList);
         return "list";
     }
