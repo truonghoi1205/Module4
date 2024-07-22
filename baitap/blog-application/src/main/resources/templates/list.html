@@ -21,12 +21,16 @@
         <tr>
             <th style="width: 20px">STT</th>
             <th>Tiêu đề</th>
+            <th>Ảnh</th>
             <th style="width: 200px">Tác giả</th>
             <th style="width: 105px"></th>
         </tr>
         <tr th:each="blog,status:${blogList}">
             <td class="text-center" th:text="${status.count}"></td>
             <td><span th:text="${#strings.substring(blog.content, 0, 126)}"></span> ...</td>
+            <td><img class="img-fluid overflow-hidden object-fit-cover"
+                      th:src="${blog.avatar}"
+                      style="width: 25px; height: 25px;"></td>
             <td th:text="${blog.author}"></td>
             <td>
                 <a th:href="@{/blog/__${blog.getId()}__/update}" class="btn btn-sm btn-outline-success">Sửa</a>

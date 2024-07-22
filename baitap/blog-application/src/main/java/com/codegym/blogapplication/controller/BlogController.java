@@ -59,7 +59,7 @@ public class BlogController {
         Blog blog = new Blog(blogFromCreateDto.getId(), blogFromCreateDto.getTitle(), blogFromCreateDto.getContent(), blogFromCreateDto.getAuthor(), fileName);
         redirect.addFlashAttribute("noti", "Thêm mới thành công!");
         blogService.save(blog);
-        return "redirect:/blog";
+        return "redirect:/blog/list";
     }
 
     @GetMapping("{id}/content")
@@ -120,4 +120,5 @@ public class BlogController {
         blogService.save(blog);
         return "redirect:/blog/list";
     }
+
 }

@@ -7,7 +7,6 @@
 <body class="bg-body-tertiary" >
 <div th:replace="~{layout :: nav}"></div>
 <div class="container">
-
     <div class="shadow-sm mt-5 p-4">
         <h2>Xóa BLOG</h2>
         <form action="/blog/update" method="post" th:object="${blog}" enctype="multipart/form-data">
@@ -23,6 +22,7 @@
                 </div>
                 <div class="col-6">
                     <label for="avatar" class="form-label">Avatar</label>
+                    <img th:src="${blog.avatar}" class="img-fluid">
                     <input type="file" class="form-control" id="avatar" name="avatar" th:field="*{avatar}">
                 </div>
             </div>
