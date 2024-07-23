@@ -2,6 +2,7 @@ package com.codegym.blogapplication.controller.admin;
 
 import com.codegym.blogapplication.model.Blog;
 import com.codegym.blogapplication.model.Category;
+import com.codegym.blogapplication.model.DTO.BlogFormCreateDto;
 import com.codegym.blogapplication.model.DTO.BlogFormUpdateDto;
 import com.codegym.blogapplication.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.File;
 import java.io.IOException;
 
+
 @Controller
 @RequestMapping("/admin/categories")
 public class CategoryController {
@@ -33,6 +35,20 @@ public class CategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("name", name);
         return "category/list";
+    }
+
+    @GetMapping("/create")
+    public String showFormCreate(Model model) {
+        model.addAttribute("category", new Category());
+        return "category/create";
+    }
+
+    @PostMapping("/create")
+    public String save(@ModelAttribute Category category,
+                       RedirectAttributes redirect) {
+        redirect.addFlashAttribute("noti", "Thêm mới thành công!");
+        categoryService.save(category);
+        return "redirect:/admin/categories";
     }
 
     @GetMapping("{id}/update")

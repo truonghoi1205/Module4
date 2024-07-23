@@ -5,12 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="~{layout :: nav('/blog/list')}">
+<div th:replace="~{layout :: nav('admin/blog/list')}">
 </div>
 <div class="container bg-white shadow rounded p-3 mt-3">
     <div class="text-end d-flex justify-content-between">
         <h2 class="m-0">DANH SÁCH BLOG</h2>
-        <a href="/admin/blog/create"
+        <a href="/admin/categories/create"
            class="hover-show-text btn btn-sm btn-outline-primary d-inline-flex text-nowrap align-items-center"><i
                 class="fa-solid fa-plus"></i>
             <div class="hv-text">Thêm Blog mới</div>
