@@ -2,6 +2,7 @@ package com.codegym.customerprovincemanagement.service.customer;
 
 import com.codegym.customerprovincemanagement.model.Customer;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 
@@ -14,4 +15,6 @@ public interface ICustomerService {
     Customer findById(Long id);
 
     void deleteById(Long id);
+
+    Page<Customer> findAllByName(String lastName, Pageable pageable);
 }

@@ -7,7 +7,7 @@ import com.codegym.customerprovincemanagement.service.province.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +33,12 @@ public class CustomerController {
 
     @GetMapping("")
     public String showAll(Model model,
+                          @RequestParam(defaultValue = "") String lastName,
                           @RequestParam(defaultValue = "0") int page) {
-        Page<Customer> customers = customerService.findAll(PageRequest.of(page,2));
+        Sort sort = Sort.by("last_name").descending();
+        Page<Customer> customers = customerService.findAllByName(lastName,PageRequest.of(page,2,sort));
         model.addAttribute("customers", customers);
+        model.addAttribute("lastName",lastName);
         return "list";
     }
 

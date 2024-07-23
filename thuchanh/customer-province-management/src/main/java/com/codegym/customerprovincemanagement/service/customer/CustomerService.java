@@ -4,6 +4,7 @@ import com.codegym.customerprovincemanagement.model.Customer;
 import com.codegym.customerprovincemanagement.repository.ICustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,11 @@ public class CustomerService implements ICustomerService{
     @Override
     public void deleteById(Long id) {
         customerRepo.deleteById(id);
+    }
+
+    @Override
+    public Page<Customer> findAllByName(String lastName, Pageable pageable) {
+        return customerRepo.findAllByNameContaining("%"+ lastName +"%", pageable);
     }
 
 
