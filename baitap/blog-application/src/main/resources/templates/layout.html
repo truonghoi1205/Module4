@@ -47,15 +47,18 @@
                     <a class="nav-link active" aria-current="page" href="/blog">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/blog/list">Trang quản lí</a>
+                    <a class="nav-link active" href="/admin/blog">Trang quản lí blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/categories">Trang quản lí danh mục</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" href="/blog" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Danh mục
                     </a>
                     <ul class="dropdown-menu">
-                        <li th:each="c : ${categories}"><a class="dropdown-item" href="#" th:text="${c.name}"></a></li>
+                        <li th:each="c : ${categories}"><a class="dropdown-item" th:href="@{/blog(category_id=${c.id})}" th:text="${c.name}"></a></li>
                     </ul>
                 </li>
             </ul>

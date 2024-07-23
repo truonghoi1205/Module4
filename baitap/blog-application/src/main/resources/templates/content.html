@@ -16,6 +16,7 @@
         <div>
             <p class="card-title" th:text="${blog.author}"></p>
             <h3 class="card-text m-0 " th:text="${blog.title}"></h3>
+            <h5 th:text="${blog.category.name}"></h5>
         </div>
     </div>
     <p th:utext="${blog.content}"></p>

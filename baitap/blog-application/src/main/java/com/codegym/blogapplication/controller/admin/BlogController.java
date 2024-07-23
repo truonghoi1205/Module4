@@ -1,4 +1,4 @@
-package com.codegym.blogapplication.controller;
+package com.codegym.blogapplication.controller.admin;
 
 import com.codegym.blogapplication.model.Blog;
 import com.codegym.blogapplication.model.Category;
@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/blog")
+@RequestMapping("/admin/blog")
 public class BlogController {
     @Value("${upload.path}")
     private String fileUpload;
@@ -40,18 +40,6 @@ public class BlogController {
     }
 
     @GetMapping("")
-    public String home(Model model,
-                       @RequestParam(defaultValue = "") String title,
-                       @RequestParam(defaultValue = "0") int page,
-                       @RequestParam Long category_id) {
-        Sort sort = Sort.by("title").descending();
-        Page<Blog> blogList = blogService.findAllByTitle(title, PageRequest.of(page, 5, sort));
-        model.addAttribute("blogList", blogList);
-        model.addAttribute("title", title);
-        return "home";
-    }
-
-    @GetMapping("/list")
     public String showList(Model model,
                            @RequestParam(defaultValue = "") String title,
                            @RequestParam(defaultValue = "0") int page) {
@@ -59,13 +47,13 @@ public class BlogController {
         Page<Blog> blogList = blogService.findAllByTitle(title, PageRequest.of(page, 5, sort));
         model.addAttribute("blogList", blogList);
         model.addAttribute("title", title);
-        return "list";
+        return "blog/list";
     }
 
     @GetMapping("/create")
     public String showFormCreate(Model model) {
         model.addAttribute("blogFromCreateDto", new BlogFormCreateDto());
-        return "create";
+        return "blog/create";
     }
 
     @PostMapping("/create")
@@ -80,23 +68,11 @@ public class BlogController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Blog blog = new Blog(blogFromCreateDto.getId(), blogFromCreateDto.getTitle(), blogFromCreateDto.getContent(), blogFromCreateDto.getAuthor(),fileName, blogFromCreateDto.getCategory());
+        Blog blog = new Blog(blogFromCreateDto.getId(), blogFromCreateDto.getTitle(), blogFromCreateDto.getContent(), blogFromCreateDto.getAuthor(), fileName, blogFromCreateDto.getCategory());
         redirect.addFlashAttribute("noti", "Thêm mới thành công!");
         blogService.save(blog);
-        return "redirect:/blog/list";
+        return "redirect:/admin/blog";
     }
-
-    @GetMapping("{id}/content")
-    public String showContent(Model model,
-                              @PathVariable Long id) {
-        Blog blog = blogService.findById(id);
-        if (blog.equals(null)) {
-            return "redirect:/blog";
-        }
-        model.addAttribute("blog", blog);
-        return "content";
-    }
-
 
     @PostMapping("{id}/delete")
     public String delete(@ModelAttribute Blog blog,
@@ -104,7 +80,7 @@ public class BlogController {
                          RedirectAttributes redirect) {
         blogService.deleteById(id);
         redirect.addFlashAttribute("noti", "Xóa thành công!");
-        return "redirect:/blog/list";
+        return "redirect:/admin/blog";
     }
 
     @GetMapping("{id}/update")
@@ -112,10 +88,10 @@ public class BlogController {
                                  @PathVariable Long id) {
         Blog blog = blogService.findById(id);
         if (blog.equals(null)) {
-            return "redirect:/blog/list";
+            return "redirect:/admin/blog";
         }
         model.addAttribute("blog", blog);
-        return "update";
+        return "blog/update";
     }
 
     @PostMapping("/update")
@@ -130,13 +106,11 @@ public class BlogController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Blog blog = new Blog(blogFormUpdateDto.getId(), blogFormUpdateDto.getTitle(), blogFormUpdateDto.getContent(), blogFormUpdateDto.getAuthor(), fileName,blogFormUpdateDto.getCategory());
+        Blog blog = new Blog(blogFormUpdateDto.getId(), blogFormUpdateDto.getTitle(), blogFormUpdateDto.getContent(), blogFormUpdateDto.getAuthor(), fileName, blogFormUpdateDto.getCategory());
         redirect.addFlashAttribute("noti", "Cập nhật thành công!");
         blogService.save(blog);
         return "redirect:/blog/list";
     }
-
-
 
 
 }
