@@ -1,5 +1,6 @@
 package com.codegym.blogapplication.service;
 
+import com.codegym.blogapplication.model.Blog;
 import com.codegym.blogapplication.model.Category;
 import com.codegym.blogapplication.repository.ICategoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,4 +16,6 @@ public class CategoryService implements ICategoryService{
     public Iterable<Category> findAll() {
         return categoryRepo.findAll();
     }
+
+
 }

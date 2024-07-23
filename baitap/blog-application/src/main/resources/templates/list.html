@@ -25,6 +25,7 @@
             <th style="width: 10px">Ảnh</th>
             <th>Tiêu đề</th>
             <th style="width: 300px">Tác giả</th>
+            <th>Danh mục</th>
             <th style="width: 105px"></th>
         </tr>
         <tr th:each="b ,bStatus : ${blogList}">
@@ -34,6 +35,7 @@
                      style="width: 25px; height: 25px;"></td>
             <td th:text="${b.title}"></td>
             <td th:text="${b.author}"></td>
+            <td th:text="${b.category.name}"></td>
             <td>
                 <div class="d-flex">
                     <a th:href="@{/blog/__${b.getId()}__/update}" class="btn btn-sm btn-outline-success me-2">Sửa</a>

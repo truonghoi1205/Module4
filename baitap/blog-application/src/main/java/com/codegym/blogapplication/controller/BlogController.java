@@ -42,7 +42,8 @@ public class BlogController {
     @GetMapping("")
     public String home(Model model,
                        @RequestParam(defaultValue = "") String title,
-                       @RequestParam(defaultValue = "0") int page) {
+                       @RequestParam(defaultValue = "0") int page,
+                       @RequestParam Long category_id) {
         Sort sort = Sort.by("title").descending();
         Page<Blog> blogList = blogService.findAllByTitle(title, PageRequest.of(page, 5, sort));
         model.addAttribute("blogList", blogList);
@@ -79,7 +80,7 @@ public class BlogController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Blog blog = new Blog(blogFromCreateDto.getId(), blogFromCreateDto.getTitle(), blogFromCreateDto.getContent(), blogFromCreateDto.getAuthor(), fileName);
+        Blog blog = new Blog(blogFromCreateDto.getId(), blogFromCreateDto.getTitle(), blogFromCreateDto.getContent(), blogFromCreateDto.getAuthor(),fileName, blogFromCreateDto.getCategory());
         redirect.addFlashAttribute("noti", "Thêm mới thành công!");
         blogService.save(blog);
         return "redirect:/blog/list";
@@ -129,10 +130,13 @@ public class BlogController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Blog blog = new Blog(blogFormUpdateDto.getId(), blogFormUpdateDto.getTitle(), blogFormUpdateDto.getContent(), blogFormUpdateDto.getAuthor(), fileName);
+        Blog blog = new Blog(blogFormUpdateDto.getId(), blogFormUpdateDto.getTitle(), blogFormUpdateDto.getContent(), blogFormUpdateDto.getAuthor(), fileName,blogFormUpdateDto.getCategory());
         redirect.addFlashAttribute("noti", "Cập nhật thành công!");
         blogService.save(blog);
         return "redirect:/blog/list";
     }
+
+
+
 
 }

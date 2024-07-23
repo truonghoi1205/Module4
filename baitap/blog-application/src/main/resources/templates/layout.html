@@ -34,7 +34,7 @@
 
 </head>
 <body>
-<nav th:fragment="nav(url)" class="navbar navbar-expand-lg">
+<nav th:fragment="nav(${url})" class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">BLOG CÁ NHÂN</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -54,7 +54,7 @@
                        aria-expanded="false">
                         Danh mục
                     </a>
-                    <ul class="dropdown-menu" >
+                    <ul class="dropdown-menu">
                         <li th:each="c : ${categories}"><a class="dropdown-item" href="#" th:text="${c.name}"></a></li>
                     </ul>
                 </li>
