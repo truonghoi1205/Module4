@@ -1,13 +1,16 @@
 package com.codegym.blogapplication.controller;
 
 import com.codegym.blogapplication.model.Blog;
+import com.codegym.blogapplication.model.Category;
 import com.codegym.blogapplication.model.DTO.BlogFormCreateDto;
 import com.codegym.blogapplication.model.DTO.BlogFormUpdateDto;
 import com.codegym.blogapplication.service.IBlogService;
+import com.codegym.blogapplication.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -23,22 +26,38 @@ import java.io.IOException;
 public class BlogController {
     @Value("${upload.path}")
     private String fileUpload;
+
     @Autowired
     private IBlogService blogService;
 
+    @Autowired
+    private ICategoryService categoryService;
+
+    @ModelAttribute("categories")
+    private Iterable<Category> showAllCategory() {
+        Iterable<Category> categories = categoryService.findAll();
+        return categories;
+    }
+
     @GetMapping("")
     public String home(Model model,
+                       @RequestParam(defaultValue = "") String title,
                        @RequestParam(defaultValue = "0") int page) {
-        Page<Blog> blogList = blogService.findAll(PageRequest.of(page,5));
+        Sort sort = Sort.by("title").descending();
+        Page<Blog> blogList = blogService.findAllByTitle(title, PageRequest.of(page, 5, sort));
         model.addAttribute("blogList", blogList);
+        model.addAttribute("title", title);
         return "home";
     }
 
     @GetMapping("/list")
     public String showList(Model model,
+                           @RequestParam(defaultValue = "") String title,
                            @RequestParam(defaultValue = "0") int page) {
-        Page<Blog> blogList = blogService.findAll(PageRequest.of(page,5));
+        Sort sort = Sort.by("title").descending();
+        Page<Blog> blogList = blogService.findAllByTitle(title, PageRequest.of(page, 5, sort));
         model.addAttribute("blogList", blogList);
+        model.addAttribute("title", title);
         return "list";
     }
 
@@ -54,7 +73,7 @@ public class BlogController {
         MultipartFile multipartFile = blogFromCreateDto.getAvatar();
         String fileName = multipartFile.getOriginalFilename();
         try {
-            System.out.println( fileUpload + fileName);
+            System.out.println(fileUpload + fileName);
             FileCopyUtils.copy(blogFromCreateDto.getAvatar().getBytes(), new File(fileUpload + fileName));
 
         } catch (IOException e) {
@@ -70,28 +89,19 @@ public class BlogController {
     public String showContent(Model model,
                               @PathVariable Long id) {
         Blog blog = blogService.findById(id);
-        if(blog.equals(null)) {
+        if (blog.equals(null)) {
             return "redirect:/blog";
         }
-        model.addAttribute("blog",blog);
+        model.addAttribute("blog", blog);
         return "content";
     }
 
-    @GetMapping("{id}/delete")
-    public String showFormDelete(Model model,
-                                 @PathVariable Long id) {
-        Blog blog = blogService.findById(id);
-        if(blog.equals(null)) {
-            return "redirect:/blog/list";
-        }
-        model.addAttribute("blog",blog);
-        return "delete";
-    }
 
-    @PostMapping("/delete")
+    @PostMapping("{id}/delete")
     public String delete(@ModelAttribute Blog blog,
+                         @PathVariable Long id,
                          RedirectAttributes redirect) {
-        blogService.delete(blog.getId());
+        blogService.deleteById(id);
         redirect.addFlashAttribute("noti", "Xóa thành công!");
         return "redirect:/blog/list";
     }
@@ -100,20 +110,20 @@ public class BlogController {
     public String showFormUpdate(Model model,
                                  @PathVariable Long id) {
         Blog blog = blogService.findById(id);
-        if(blog.equals(null)) {
+        if (blog.equals(null)) {
             return "redirect:/blog/list";
         }
-        model.addAttribute("blog",blog);
+        model.addAttribute("blog", blog);
         return "update";
     }
 
     @PostMapping("/update")
     public String update(@ModelAttribute BlogFormUpdateDto blogFormUpdateDto,
-                       RedirectAttributes redirect) {
+                         RedirectAttributes redirect) {
         MultipartFile multipartFile = blogFormUpdateDto.getAvatar();
         String fileName = multipartFile.getOriginalFilename();
         try {
-            System.out.println( fileUpload + fileName);
+            System.out.println(fileUpload + fileName);
             FileCopyUtils.copy(blogFormUpdateDto.getAvatar().getBytes(), new File(fileUpload + fileName));
 
         } catch (IOException e) {

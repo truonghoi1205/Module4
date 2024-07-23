@@ -11,7 +11,7 @@ public interface IBlogService {
 
     Blog findById(Long id);
 
-    void delete(Long id);
+    Page<Blog> findAllByTitle(String title, Pageable pageable);
 
-    void update(Long id);
+    void deleteById(Long id);
 }

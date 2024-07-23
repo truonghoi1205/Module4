@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BlogService implements IBlogService{
+public class BlogService implements IBlogService {
 
     @Autowired
     private IBlogRepo blogRepo;
@@ -28,13 +28,15 @@ public class BlogService implements IBlogService{
         return blogRepo.findById(id).orElse(null);
     }
 
+
+
     @Override
-    public void delete(Long id) {
-        blogRepo.deleteById(id);
+    public Page<Blog> findAllByTitle(String title, Pageable pageable) {
+        return blogRepo.findAllByTitle("%" + title + "%", pageable);
     }
 
     @Override
-    public void update(Long id) {
-
+    public void deleteById(Long id) {
+        blogRepo.deleteById(id);
     }
 }

@@ -3,6 +3,7 @@
 <head th:replace="~{/layout :: head}">
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body class="bg-body-tertiary">
 <div class="container mt-5 ">
@@ -10,13 +11,13 @@
         <h3 class="m-0">Danh sách khách hàng</h3>
         <form action="/customers" class="d-flex">
             <div class="input-group">
-                <span class="input-group-text ">
+                <span class="input-group-text search-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="DocSearch-Search-Icon"
                      viewBox="0 0 16 16" aria-hidden="true">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                 </svg>
                 </span>
-                <input type="text" name="lastName" th:value="${lastName}" placeholder="Nhập tên khách hàng" class="form-control form-control-sm me-2">
+                <input type="text" name="lastName" th:value="${lastName}" placeholder="Nhập tên khách hàng" class="rounded-start form-control form-control-sm me-2 search ">
             </div>
             <button class="btn btn-sm btn-secondary">Tìm</button>
         </form>
