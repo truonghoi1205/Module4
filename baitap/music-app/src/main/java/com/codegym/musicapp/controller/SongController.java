@@ -1,6 +1,6 @@
 package com.codegym.musicapp.controller;
 
-import com.codegym.musicapp.model.DTO.SongDto;
+import com.codegym.musicapp.DTO.SongDto;
 import com.codegym.musicapp.model.Song;
 import com.codegym.musicapp.service.ISongService;
 import org.springframework.beans.BeanUtils;

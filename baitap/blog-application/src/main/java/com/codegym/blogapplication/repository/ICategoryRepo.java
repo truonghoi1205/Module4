@@ -1,6 +1,5 @@
 package com.codegym.blogapplication.repository;
 
-import com.codegym.blogapplication.model.Blog;
 import com.codegym.blogapplication.model.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

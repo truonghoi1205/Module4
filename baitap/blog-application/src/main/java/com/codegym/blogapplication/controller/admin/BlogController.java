@@ -100,7 +100,6 @@ public class BlogController {
         MultipartFile multipartFile = blogFormUpdateDto.getAvatar();
         String fileName = multipartFile.getOriginalFilename();
         try {
-            System.out.println(fileUpload + fileName);
             FileCopyUtils.copy(blogFormUpdateDto.getAvatar().getBytes(), new File(fileUpload + fileName));
 
         } catch (IOException e) {
@@ -109,7 +108,7 @@ public class BlogController {
         Blog blog = new Blog(blogFormUpdateDto.getId(), blogFormUpdateDto.getTitle(), blogFormUpdateDto.getContent(), blogFormUpdateDto.getAuthor(), fileName, blogFormUpdateDto.getCategory());
         redirect.addFlashAttribute("noti", "Cập nhật thành công!");
         blogService.save(blog);
-        return "redirect:/blog/list";
+        return "redirect:/admin/blog";
     }
 
 

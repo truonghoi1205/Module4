@@ -1,4 +1,4 @@
-package com.codegym.musicapp.model.DTO;
+package com.codegym.musicapp.DTO;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
