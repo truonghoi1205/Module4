@@ -60,10 +60,12 @@ public class SongController {
     public String showFormUpdate(Model model,
                                  @PathVariable Long id) {
         Song song = songService.findById(id);
+        SongDto songDto = new SongDto();
+        BeanUtils.copyProperties(song,songDto);
         if (song.equals(null)) {
             return "redirect:/songs";
         }
-        model.addAttribute("song", song);
+        model.addAttribute("songDto", songDto);
         return "update";
     }
 
@@ -74,7 +76,7 @@ public class SongController {
                          RedirectAttributes redirect) {
         model.addAttribute("isSubmitted", true);
         if (result.hasFieldErrors()) {
-            model.addAttribute("song", songDto);
+            model.addAttribute("songDto", songDto);
             return "update";
         }
         Song song = new Song();
