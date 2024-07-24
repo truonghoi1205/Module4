@@ -1,6 +1,6 @@
 package com.codegym.registrationform.controller;
 
-import com.codegym.registrationform.model.DTO.FormDto;
+import com.codegym.registrationform.DTO.FormDto;
 import com.codegym.registrationform.model.Form;
 import com.codegym.registrationform.service.IFormService;
 import org.springframework.beans.BeanUtils;
