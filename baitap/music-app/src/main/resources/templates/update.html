@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="bg-body-tertiary">
+<div class="container w-25">
+    <div class="shadow-sm mt-5 p-4 ">
+        <h2>Thêm mới bài hát</h2>
+        <form action="/songs/update" method="post" th:object="${song}" class="needs-validation" novalidate>
+            <input type="hidden" th:field="*{id}"/>
+            <div class="mt-3">
+                <label for="name" class="form-label">Tên bài hát</label>
+                <input type="text" class="form-control" th:classappend="${isSubmitted} ? ${#fields.hasErrors('name') ? 'is-invalid' : 'is-valid'} : ''" id="name" required th:field="*{name}">
+                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                    <span th:errors="*{name}"></span>
+                </div>
+            </div>
+            <div class="mt-3">
+                <label for="artist" class="form-label">Nghệ sĩ thể hiện</label>
+                <input type="text" class="form-control" th:classappend="${isSubmitted} ? ${#fields.hasErrors('artist') ? 'is-invalid' : 'is-valid'} : ''" id="artist" required th:field="*{artist}">
+                <div th:if="${#fields.hasErrors('artist')}" class="invalid-feedback">
+                    <span th:errors="*{artist}"></span>
+                </div>
+            </div>
+            <div class="mt-3">
+                <label for="category" class="form-label">Thể loa nhạc</label>
+                <input type="text" class="form-control" th:classappend="${isSubmitted} ? ${#fields.hasErrors('category') ? 'is-invalid' : 'is-valid'} : ''" id="category" required th:field="*{category}">
+                <div th:if="${#fields.hasErrors('category')}" class="invalid-feedback">
+                    <span th:errors="*{category}"></span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-3">
+                <a href="/songs" class="btn btn-sm btn-secondary me-2">Quay lại</a>
+                <button class="btn btn-sm btn-primary">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

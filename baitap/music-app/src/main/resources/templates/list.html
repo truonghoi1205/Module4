@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container bg-white shadow rounded p-3 mt-3 w-50">
+    <div class="text-end d-flex justify-content-between">
+        <h2 class="m-0">DANH SÁCH BÀI HÁT</h2>
+        <a href="/songs/create"
+           class="hover-show-text btn btn-sm btn-outline-primary d-inline-flex text-nowrap align-items-center"><i
+                class="fa-solid fa-plus"></i>
+            <div class="hv-text">Thêm danh bài hát mới</div>
+        </a>
+    </div>
+    <div>
+        <p th:if="${noti}" class="alert alert-success" th:text="${noti}"></p>
+    </div>
+    <table class="table table-bordered table-hover mt-3">
+        <tr>
+            <th style="width: 20px">STT</th>
+            <th>Tên bài hát</th>
+            <th>Nghệ sĩ thể hiện</th>
+            <th>Thể loại nhạc</th>
+            <th></th>
+        </tr>
+        <tr th:each="s ,sStatus : ${songs}">
+            <td class="text-center" th:text="${sStatus.count}"></td>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.artist}"></td>
+            <td th:text="${s.category}"></td>
+            <td>
+                <div class="d-flex">
+                    <a th:href="@{/songs/__${s.getId()}__/update}" class="btn btn-sm btn-outline-success me-2">Sửa</a>
+                    <button th:attr="data-el_id=${s.getId()}, data-el_name=${s.getName()}" type="button"
+                            class="btn btn-sm btn-danger delete" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                        Xóa
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table>
+<!--    <div class="mt-3 d-flex justify-content-center">-->
+<!--        <nav aria-label="Page navigation example">-->
+<!--            <ul class="pagination">-->
+<!--                <li class="page-item" th:if="${songs.hasPrevious()}">-->
+<!--                    <a class="page-link" th:href="@{/admin/categories/list(page=${songs.number - 1}, name=${name})}"-->
+<!--                       aria-label="Previous">-->
+<!--                        <span aria-hidden="true">&laquo;</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="page-item" th:if="${songs.hasNext()}">-->
+<!--                    <a class="page-link" th:href="@{/admin/categories/list(page=${songs.number + 1}, name=${name})}"-->
+<!--                       aria-label="Next">-->
+<!--                        <span aria-hidden="true">&raquo;</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="id_song" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span class="mb-3 text-center">Bạn có muốn xóa bài hát  </span> <span id="name"
+                                                                                class="fw-bold"> </span><span> không?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Xóa</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function infoDelete(id, name) {
+        document.getElementById("id_song").setAttribute("action", `/songs/${id}/delete`)
+        document.getElementById("name").innerHTML = name;
+    }
+
+    document.querySelectorAll('.delete').forEach(el => {
+        el.addEventListener('click', function () {
+            let id = el.dataset.el_id;
+            name = el.dataset.el_name;
+            infoDelete(id, name);
+        })
+    })
+</script>
+</body>
+</html>
