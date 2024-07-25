@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <label for="category" class="form-label">Thể loa nhạc</label>
+                <label for="category" class="form-label">Thể loại nhạc</label>
                 <input type="text" class="form-control" th:classappend="${isSubmitted} ? ${#fields.hasErrors('category') ? 'is-invalid' : 'is-valid'} : ''" id="category" required th:field="*{category}">
                 <div th:if="${#fields.hasErrors('category')}" class="invalid-feedback">
                     <span th:errors="*{category}"></span>

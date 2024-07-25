@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="bg-body-tertiary">
+<div th:replace="~{layout :: nav}">
+</div>
+<div class="container mt-5 shadow-sm p-3">
+    <div class="text-end">
+        <a href="/admin/book/create"
+           class="hover-show-text btn btn-sm btn-outline-primary d-inline-flex text-nowrap align-items-center"><i
+                class="fa-solid fa-plus"></i>
+            <div class="hv-text">Thêm sách mới</div>
+        </a>
+    </div>
+    <p th:text="${error}" class="text-danger"></p>
+    <p th:text="${noti}" class="text-success"></p>
+    <table class="table table-hover table-bordered">
+        <tr>
+            <th>STT</th>
+            <th>Mã sách</th>
+            <th>Tên sách</th>
+            <th>Tác giả</th>
+            <th>Số lượng</th>
+            <th></th>
+        </tr>
+        <tr th:each="b,bStatus : ${books}">
+            <td th:text="${bStatus.count}"></td>
+            <td th:text="${b.code}"></td>
+            <td th:text="${b.name}"></td>
+            <td th:text="${b.author}"></td>
+            <td th:text="${b.quantity}"></td>
+            <td style="width: 20px">
+                <div class="d-flex">
+                    <a th:href="@{/admin/book/__${b.getId()}__/update}" class="btn btn-sm btn-outline-success me-2">Sửa</a>
+                    <button th:attr="data-el_id=${b.getId()}, data-el_name=${b.getName()}" type="button"
+                            class="btn btn-sm btn-outline-danger delete" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                        Xóa
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="mt-3 d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:if="${books.hasPrevious()}">
+                    <a class="page-link" th:href="@{/admin/book(page=${books.number - 1})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:if="${books.hasNext()}">
+                    <a class="page-link" th:href="@{/admin/book(page=${books.number + 1})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="id_book" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 fw-bold text-center" id="exampleModalLabel">Xoá sách?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span class="mb-3 text-center">Bạn có muốn xóa sách </span><span id="name"
+                                                                                     class="fw-bold"></span><span> không?</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Xóa</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function infoDelete(id, name) {
+        document.getElementById("id_book").setAttribute("action", `/admin/book/${id}/delete`)
+        document.getElementById("name").innerHTML = name;
+    }
+    document.querySelectorAll('.delete').forEach(el => {
+        el.addEventListener('click', function () {
+            let id = el.dataset.el_id;
+            name = el.dataset.el_name;
+            infoDelete(id, name);
+        })
+    })
+</script>
+</body>
+</html>

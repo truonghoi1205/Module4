@@ -52,8 +52,8 @@ public class BlogController {
 
     @GetMapping("/create")
     public String showFormCreate(Model model) {
-        model.addAttribute("blogFromCreateDto", new BlogFormCreateDto());
-        return "blog/create";
+            model.addAttribute("blogFromCreateDto", new BlogFormCreateDto());
+            return "blog/create";
     }
 
     @PostMapping("/create")

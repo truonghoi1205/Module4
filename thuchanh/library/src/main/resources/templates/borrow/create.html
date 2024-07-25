@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="bg-body-tertiary">
+<div th:replace="~{layout :: nav}">
+</div>
+<div class="container mt-4 shadow-sm p-4 w-50">
+    <h2>Trang mượn sách</h2>
+    <div class="shadow-sm bg-white p-3 mt-3 rounded ">
+        <form action="/admin/borrow/create" method="post" th:object="${borrow}">
+            <div class="mt-3">
+                <label class="form-label">Mã sách</label>
+                <input type="hidden" class="form-control" th:field="*{code}">
+                <input disabled type="text" class="form-control" th:value="${borrow.code}">
+            </div>
+            <div>
+                <label class="form-label">Tên sách</label>
+                <input type="hidden" class="form-control" th:field="*{book}">
+                <input disabled type="text" class="form-control" th:value="${borrow.book.name}">
+            </div>
+            <div class="mt-3">
+                <label class="form-label">Tên học sinh</label>
+                <select class="form-select form-select " th:field="*{student}">
+                    <option th:each="s,sStatus : ${students}" th:text="${s.name}" th:value="${s.id}"></option>
+                </select>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6">
+                    <label class="form-label">Ngày mượn sách</label>
+                    <input type="date" class="form-control" th:field="*{borrow_day}">
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Ngày trả sách</label>
+                    <input type="date" class="form-control" th:field="*{return_day}">
+                </div>
+            </div>
+            <div class="mt-3 d-flex justify-content-end ">
+                <a href="/library" class="btn btn-secondary me-2">Hủy</a>
+                <button class="btn btn-primary ">Mượn</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
