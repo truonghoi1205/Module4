@@ -1,18 +1,20 @@
 package com.codegym.blogapplication.controller.admin;
 
-import com.codegym.blogapplication.model.Blog;
 import com.codegym.blogapplication.model.Category;
-import com.codegym.blogapplication.model.DTO.BlogFormCreateDto;
-import com.codegym.blogapplication.model.DTO.BlogFormUpdateDto;
 import com.codegym.blogapplication.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -32,6 +34,7 @@ public class CategoryController {
         return "category/list";
     }
 
+
     @GetMapping("/create")
     public String showFormCreate(Model model) {
         model.addAttribute("category", new Category());
@@ -45,6 +48,7 @@ public class CategoryController {
         categoryService.save(category);
         return "redirect:/admin/categories";
     }
+
 
     @GetMapping("{id}/update")
     public String showFormUpdate(Model model,

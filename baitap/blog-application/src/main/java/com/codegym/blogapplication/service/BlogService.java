@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class BlogService implements IBlogService {
 
@@ -45,6 +48,20 @@ public class BlogService implements IBlogService {
         return blogRepo.findAllByCategory_Id(categoryId,pageable);
     }
 
+    @Override
+    public List<Blog> findAllBlog() {
+        return blogRepo.findAll();
+    }
+
+    @Override
+    public Optional<Blog> findBlogById(Long id) {
+        return blogRepo.findById(id);
+    }
+
+    @Override
+    public List<Blog> findAllBlogByCategory(int categoryId) {
+        return blogRepo.findAllBlogByCategoryId(categoryId);
+    }
 
 
 }

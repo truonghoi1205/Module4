@@ -2,8 +2,10 @@ package com.codegym.blogapplication.service;
 
 import com.codegym.blogapplication.model.Blog;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface IBlogService {
     Page<Blog> findAll(Pageable pageable);
@@ -17,4 +19,10 @@ public interface IBlogService {
     void deleteById(Long id);
 
     Page<Blog> findAllBlogByCategoryId(int categoryId, Pageable pageable);
+
+    List<Blog> findAllBlog();
+
+    Optional<Blog> findBlogById(Long id);
+
+    List<Blog> findAllBlogByCategory(int categoryId);
 }
