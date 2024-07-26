@@ -7,29 +7,22 @@
 <body class="bg-body-tertiary">
 <div th:replace="~{layout :: nav}">
 </div>
-    <div class="container mt-5 shadow-sm p-3">
-        <p th:text="${error}" class="text-danger"></p>
-        <p th:text="${noti}" class="text-success"></p>
-        <table class="table table-hover table-bordered">
-            <tr>
-                <th>STT</th>
-                <th>Mã sách</th>
-                <th>Tên sách</th>
-                <th>Tác giả</th>
-                <th>Số lượng</th>
-                <th></th>
-            </tr>
-            <tr th:each="b,bStatus : ${books}">
-                <td th:text="${bStatus.count}"></td>
-                <td th:text="${b.code}"></td>
-                <td th:text="${b.name}"></td>
-                <td th:text="${b.author}"></td>
-                <td th:text="${b.quantity}"></td>
-                <td>
-                    <a th:href="@{/admin/borrow/__${b.getId()}__/create}" class="btn btn-sm btn-outline-primary">Mượn</a>
-                </td>
-            </tr>
-        </table>
+<div class="container mt-5 shadow-sm p-3">
+    <div class="row">
+        <div class="col-3" th:each="b : ${books}">
+            <div class="card" style="width: 18rem;text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                <img src="https://static.tramdoc.vn/image/img.news/0/0/0/8341.jpg?v=1&w=300&h=200&nocache=1"
+                     class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${b.name}" style="text-overflow: ellipsis; overflow: hidden; "></h5>
+                    <p class="card-text" th:text="${b.author}"></p>
+                    <div class="text-end">
+                        <a th:href="@{/admin/borrow/__${b.getId()}__/create}" class="btn btn-sm btn-outline-primary ">Mượn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </body>
 </html>
