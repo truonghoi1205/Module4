@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{layout :: nav}"></div>
+<div class="container shadow-sm mt-2 p-3">
+    <h4>Chi tiết sản phẩm</h4>
+    <div class=" d-flex">
+        <div class="card" style="width: 18rem;">
+            <img src="https://vn-test-11.slatic.net/p/e89148ebea5c4bcb8b6850c6fa92d41c.png"
+                 class="card-img-top">
+            <div class="card-body text-center">
+                <h5 class="card-title">Mã sản phẩm: <span th:text="${product.id}"></span></h5>
+                <p class="card-text">Giá: <span th:text="${product.price}"></span></p>
+                <a th:href="@{/add/__${product.id}__}" class="btn btn-sm btn-primary">Mua ngay</a>
+            </div>
+        </div>
+        <div class="ms-2">
+            <h5 th:text="${product.name}"></h5>
+            <hr class="w-50">
+            <div class="rounded bg-warning-subtle w-50">
+                <ul class="list-unstyled p-2" style="color: coral" >
+                    <li><i class="bi bi-1-square-fill"></i> Tặng banner, thiệp (trị giá 20.000đ) miễn phí</li>
+                    <li><i class="bi bi-2-square-fill"></i> Giảm ngay 20.000đ khi Bạn tạo đơn hàng online</li>
+                    <li><i class="bi bi-3-square-fill"></i> Giảm tiếp 3% cho đơn hàng Bạn tạo ONLINE lần thứ 2, 5% đơn hàng Bạn tạo ONLINE lần thứ 6 và 10% cho đơn hàng Bạn tạo ONLINE lần thứ 12 <span class="fst-italic">(Chỉ áp dụng tại Tp. HCM)</span> </li>
+                    <li><i class="bi bi-4-square-fill"></i> Giao miễn phí trong nội thành 63/63 tỉnh</li>
+                    <li><i class="bi bi-5-square-fill"></i> Giao gấp trong vòng 2 giờ</li>
+                    <li><i class="bi bi-6-square-fill"></i> Cam kết 100% hoàn lại tiền nếu Bạn không hài lòng</li>
+                    <li><i class="bi bi-7-square-fill"></i> Cam kết hoa tươi trên 3 ngày</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
