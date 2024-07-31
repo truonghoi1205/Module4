@@ -20,9 +20,10 @@ public interface IBlogService {
 
     Page<Blog> findAllBlogByCategoryId(int categoryId, Pageable pageable);
 
-    List<Blog> findAllBlog();
+    Page<Blog> findAllBlog(Pageable pageable);
 
     Optional<Blog> findBlogById(Long id);
 
     List<Blog> findAllBlogByCategory(int categoryId);
+
 }

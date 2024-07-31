@@ -1,0 +1,84 @@
+#display-create {
+    display: none;
+    float: left;
+    color:red;
+}
+
+#display-list {
+    width: 600px;
+    margin: auto;
+    border: 2px solid;
+    border-collapse: collapse;
+}
+
+#display-list tr, #display-list th, #display-list td {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding-left: 10px;
+}
+
+.btn {
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+}
+
+#div-btn {
+    width: 600px;
+    margin-left: 470px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#title {
+    display: none;
+}
+
+#add-smartphone {
+    display: none;
+    width: 300px;
+    margin: auto;
+    container: inherit;
+}
+
+.deleteSmartphone {
+    background-color: #FF4954;
+    border: none;
+    color: #FFFFFF;
+    padding: 0.375rem 0.66rem;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.deleteSmartphone  {
+    overflow: hidden; /* Ẩn phần nền vượt ra khỏi nút */
+    position: relative;
+}
+.deleteSmartphone ::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: all 0.5s;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+.deleteSmartphone :hover::after {
+    width: 0;
+    height: 0;
+    opacity: 1;
+}
+

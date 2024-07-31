@@ -32,7 +32,6 @@ public class BlogService implements IBlogService {
     }
 
 
-
     @Override
     public Page<Blog> findAllByTitle(String title, Pageable pageable) {
         return blogRepo.findAllByTitleContaining(title, pageable);
@@ -49,8 +48,8 @@ public class BlogService implements IBlogService {
     }
 
     @Override
-    public List<Blog> findAllBlog() {
-        return blogRepo.findAll();
+    public Page<Blog> findAllBlog(Pageable pageable) {
+        return blogRepo.findAll(pageable);
     }
 
     @Override
@@ -62,6 +61,7 @@ public class BlogService implements IBlogService {
     public List<Blog> findAllBlogByCategory(int categoryId) {
         return blogRepo.findAllBlogByCategoryId(categoryId);
     }
+
 
 
 }
