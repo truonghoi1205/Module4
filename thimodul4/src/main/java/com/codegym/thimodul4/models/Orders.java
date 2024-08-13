@@ -3,6 +3,7 @@ package com.codegym.thimodul4.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
@@ -16,7 +17,7 @@ public class Orders {
     private String orderCode;
 
     @Column(nullable = false)
-    private LocalDate purchaseDate;
+    private Date purchaseDate;
 
     @Column(nullable = false)
     private Integer quantity;
@@ -24,5 +25,7 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+
 
 }

@@ -11,9 +11,6 @@ public class Product {
     private Long id;
 
     @Column(nullable = false)
-    private String code;
-
-    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
