@@ -39,16 +39,8 @@
             </div>
         </div>
         <div class="mt-3">
-            <label for="purchaseDate" class="form-label">Ngày mua</label>
-            <input type="date" class="form-control"
-                   th:classappend="${isSubmitted} ? ${#fields.hasErrors('purchaseDate') ? 'is-invalid' : 'is-valid'} : ''"
-                   id="purchaseDate" required th:field="*{purchaseDate}">
-            <div th:if="${#fields.hasErrors('purchaseDate')}" class="invalid-feedback">
-                <span class="small" th:errors="*{purchaseDate}"></span>
-            </div>
-            <div th:unless="${#fields.hasErrors('purchaseDate')}" class="invalid-feedback">
-                <span class="small">Ngày giao dịch bắt buộc.</span>
-            </div>
+            <label  class="form-label">Ngày mua</label>
+            <input type="date" class="form-control" th:field="*{purchaseDate}">
         </div>
         <div class="mt-3 d-flex justify-content-end">
             <a href="/orders" class="btn btn-sm btn-secondary me-2">Hủy</a>
@@ -56,25 +48,6 @@
         </div>
     </form>
 </div>
-<script>
-    (() => {
-        'use strict'
 
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
-</script>
 </body>
 </html>

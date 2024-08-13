@@ -52,7 +52,6 @@ public class OrderController {
     @GetMapping("/orders")
     public String listOrders(Model model,
                              @RequestParam(defaultValue = "0") int page) {
-
         Page<Orders> orders = orderService.getAllOrders(PageRequest.of(page, 2));
         model.addAttribute("orders", orders);
         return "index";
@@ -63,22 +62,16 @@ public class OrderController {
                                @PathVariable Long id) {
         Orders orders = orderService.findById(id);
         model.addAttribute("orders", orders);
-
         return "edit";
     }
 
     @PostMapping("/orders/{id}/update")
     private String update(
             @PathVariable Long id,
-            @Validated @ModelAttribute OrderDTO orderDTO,
-            BindingResult bindingResult,
+            @ModelAttribute OrderDTO orderDTO,
             RedirectAttributes redirect,
             Model model) {
         model.addAttribute("isSubmitted", true);
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("orders", orderDTO);
-            return "edit";
-        }
         Orders orders = orderService.findById(id);
         orders.setQuantity(orderDTO.getQuantity());
         Product product = productService.findById(orderDTO.getProduct() );
