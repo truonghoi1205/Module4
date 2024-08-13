@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</head>
+<body class="bg-body-tertiary">
+<div class="container mt-5 w-25 rounded shadow-sm p-4">
+    <h2>Chỉnh sửa học sinh</h2>
+    <form th:object="${studentDto}" action="/list/update" class="needs-validation"  method="POST" novalidate>
+        <input type="hidden" th:field="*{id}">
+        <div>
+            <label for="name" class="form-label">Tên học sinh</label>
+            <input type="text" class="form-control"
+                   th:classappend="${isSubmitted} ? ${#fields.hasErrors('name') ? 'is-invalid' : 'is-valid'} : ''"
+                   id="name" th:field="*{name}" required>
+            <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                <span class="small" th:errors="*{name}"></span>
+            </div>
+            <div th:unless="${#fields.hasErrors('name')}" class="invalid-feedback">
+                <span class="small">Tên bắt buộc.</span>
+            </div>
+        </div>
+        <div>
+            <label for="dob" class="form-label">Ngày sinh</label>
+            <input type="date" class="form-control"
+                   th:classappend="${isSubmitted} ? ${#fields.hasErrors('dob') ? 'is-invalid' : 'is-valid'} : ''"
+                   id="dob" required th:field="*{dob}">
+            <div th:if="${#fields.hasErrors('dob')}" class="invalid-feedback">
+                <span class="small" th:errors="*{dob}"></span>
+            </div>
+            <div th:unless="${#fields.hasErrors('dob')}" class="invalid-feedback">
+                <span class="small">Ngày sinh bắt buộc.</span>
+            </div>
+        </div>
+        <div>
+            <label for="address" class="form-label">Địa chỉ</label>
+            <input type="text" class="form-control"
+                   th:classappend="${isSubmitted} ? ${#fields.hasErrors('address') ? 'is-invalid' : 'is-valid'} : ''"
+                   id="address" required th:field="*{address}">
+            <div th:if="${#fields.hasErrors('address')}" class="invalid-feedback">
+                <span class="small" th:errors="*{address}"></span>
+            </div>
+            <div th:unless="${#fields.hasErrors('address')}" class="invalid-feedback">
+                <span class="small">Địa chỉ bắt buộc.</span>
+            </div>
+        </div>
+        <div>
+            <label class="form-label">Tên học sinh</label>
+            <select class="form-select" th:field="*{classroom}">
+                <option th:each="c: ${classrooms}" th:text="${c.name}" th:value="${c.id}"></option>
+            </select>
+        </div>
+        <div class="mt-3 text-end">
+            <a href="/list" class="btn btn-sm btn-secondary">Huỷ</a>
+            <button class="btn btn-sm btn-primary">Sửa</button>
+        </div>
+    </form>
+</div>
+<script>
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+</body>
+</html>

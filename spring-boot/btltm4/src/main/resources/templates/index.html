@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách Heo</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Danh sách Heo</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Mã số heo</th>
+            <th>Thời gian nhập chuồng</th>
+            <th>Trọng lượng nhập chuồng</th>
+            <th>Xuất xứ</th>
+            <th>Tình trạng</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${pigs}">
+            <td th:text="${p.code}"></td>
+            <td th:text="${p.importTime}"></td>
+            <td th:text="${p.importWeight}"></td>
+            <td th:text="${p.origin.name}"></td>
+            <td th:text="${p.sold ? 'Đã bán' : 'Chưa bán'}"></td>
+            <td>
+                <a th:href="@{/pig/edit/{id}(id=${p.id})}" class="btn btn-primary">Sửa</a>
+                <form th:action="@{/pig/delete/{id}(id=${p.id})}" method="post">
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

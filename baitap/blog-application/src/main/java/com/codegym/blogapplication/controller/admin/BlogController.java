@@ -43,7 +43,7 @@ public class BlogController {
     public String showList(Model model,
                            @RequestParam(defaultValue = "") String title,
                            @RequestParam(defaultValue = "0") int page) {
-        Sort sort = Sort.by("title").descending();
+        Sort sort = Sort.by(title).descending();
         Page<Blog> blogList = blogService.findAllByTitle(title, PageRequest.of(page, 5, sort));
         model.addAttribute("blogList", blogList);
         model.addAttribute("title", title);
